@@ -2,13 +2,12 @@ body {
     font-family: Arial, sans-serif;
     background-color: #212121;
     color: #ececec;
-    margin: 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    /* width: 400px;  
+    height: 1000px; */
 }
 h2 {
     margin-bottom: 20px;
@@ -27,14 +26,14 @@ input {
     border-radius: 5px;
     background-color: #333333;
     color: #ececec;
-    width: 300px;
+    width: 200px;
     outline: none;
 }
 input::placeholder {
     color: #bdbdbd;
 }
 button {
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-size: 16px;
     color: #212121;
     background-color: #ececec;
@@ -46,19 +45,23 @@ button {
 button:hover {
     background-color: #4db9b0;
 }
-#summary {
+.content{
     margin-top: 20px;
     padding: 15px;
     border: 1px solid #ececec;
     border-radius: 5px;
     background-color: #333333;
-    color: #ececec;
     width: 80%;
-    max-width: 800px;
     line-height: 1.6;
     text-align: justify;
     display: none;
 }
-#summary.show {
+.content.show{
     display: block;
+}
+p{
+    font-size: 16px;
+}
+#useCurrentTab{
+    margin-bottom: 20px;
 }

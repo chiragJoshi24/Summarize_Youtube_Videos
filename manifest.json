@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "YouTube Video Summarizer",
+    "version": "1.0",
+    "description": "Summarize YouTube videos by providing a URL",
+    "permissions": ["activeTab"],
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "assets/youtube-icon.png",
+            "48": "assets/youtube-icon.png",
+            "128": "assets/youtube-icon.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www.youtube.com/*"],
+            "js": ["script.js"]
+        }
+    ],
+    "host_permissions": ["http://localhost:5000/process"]
+}
