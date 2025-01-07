@@ -1,0 +1,9 @@
+youtube_transcript_api
+google.generativeai
+os
+bs4
+requests
+re 
+dotenv
+flask_cors
+flask
