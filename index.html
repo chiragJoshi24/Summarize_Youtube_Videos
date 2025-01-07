@@ -9,11 +9,15 @@
     </head>
     <body>
         <h2>YouTube Video Summarizer</h2>
+        <button id="useCurrentTab">Use Current Tab</button>
         <div class="main">
-            <input type="text" placeholder="Input Youtube Video Link" id="url" />
+            <input type="text" placeholder="Paste YT Video URL..." id="url" />
             <button id="submitButton">Summarize</button>
         </div>
-        <div id="summary"></div>
+        <div class="content">
+            <h3 id="videoTitle"></h3>
+            <p id="summary"></p>    
+        </div>
         <script src="script.js" type="module"></script>
     </body>
 </html>
