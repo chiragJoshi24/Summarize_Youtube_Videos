@@ -38,12 +38,12 @@ Open the browser and go to
 ```
 chrome://extensions/
 ```
-Turn on the developer mode and click on load unpacked.
-Select the root folder of cloned repository.
-Pin the extension on browser and use it.
+* Turn on the developer mode and click on load unpacked.
+* Select the root folder of cloned repository.
+* Pin the extension on browser and use it.
 
 The UI is intuitive and self-explanatory.
 
 ## Known Issues
-The extension currently only supports YouTube video links.
-Make sure the backend is running on localhost:5000 before using the extension.
+* The extension currently only supports YouTube video links.
+* Make sure the backend is running on localhost:5000 before using the extension.
