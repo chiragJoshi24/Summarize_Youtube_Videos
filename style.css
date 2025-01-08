@@ -5,9 +5,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /* width: 400px;  
-    height: 1000px; */
+    width: 400px;
+    height: 220px; 
+    overflow-y: scroll;
 }
 h2 {
     margin-bottom: 20px;
@@ -46,22 +46,44 @@ button:hover {
     background-color: #4db9b0;
 }
 .content{
-    margin-top: 20px;
+    margin-bottom: 20px;
     padding: 15px;
     border: 1px solid #ececec;
     border-radius: 5px;
     background-color: #333333;
     width: 80%;
-    line-height: 1.6;
+    line-height: 1.4;
     text-align: justify;
     display: none;
+    overflow-y: scroll;
 }
 .content.show{
     display: block;
+    overflow-y: scroll;
+}
+.content::-webkit-scrollbar {
+    width: 8px; 
+}
+.content::-webkit-scrollbar-track {
+    background: #212121; 
+    border-radius: 5px; 
+}
+.content::-webkit-scrollbar-thumb {
+    background: #888; 
+    border-radius: 5px; 
+}
+.content::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }
 p{
     font-size: 16px;
 }
 #useCurrentTab{
     margin-bottom: 20px;
+}
+#fetching{
+    display: none;
+    font-size: 16px;
+    color: #ececec;
+    margin-top: 5px;
 }
