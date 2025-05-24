@@ -1,9 +1,7 @@
-youtube_transcript_api
-google.generativeai
-os
-bs4
-requests
-re 
-dotenv
-flask_cors
-flask
+youtube_transcript_api=1.0.3
+google.generativeai=0.8.4
+bs4=4.13.3
+requests=2.25.1
+dotenv=1.1.0
+flask_cors=5.0.1
+flask=3.1.0
