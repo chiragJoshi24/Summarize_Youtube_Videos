@@ -1,15 +1,14 @@
-async function getSummary(url) {
+async function getSummary(url, specifics) {
     document.getElementById('fetching').style.display = 'block';
     try {
         const response = await fetch('http://localhost:5000/process', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ link: url }),
+            body: JSON.stringify({ link: url , specifics: specifics }),
         });
 
         if(response.status !== 200) {
             document.getElementById('videoTitle').innerText = 'INVALID';
-            document.getElementById('summary').innerText = `Error ${response.status}: ${response.statusText}. The backend was unable to fetch the data.`;
             return ;
         }
         const data = await response.json();
@@ -30,14 +29,16 @@ async function getSummary(url) {
 
 document.getElementById('submitButton').addEventListener('click', () => {
     const url = document.getElementById('url').value;
+    const specifics = document.getElementById('specifics').value;
     if(!url.trim())
         return ;
-    getSummary(url);    
+    getSummary(url, specifics);    
 });
 
 document.getElementById('useCurrentTab').addEventListener('click', () => {
+    const specifics = document.getElementById('specifics').value;
     chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
         const url = tabs[0].url;  
-        getSummary(url);
+        getSummary(url, specifics);
     });
 });

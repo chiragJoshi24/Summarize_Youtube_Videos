@@ -10,31 +10,62 @@
     <body>
         <h2>YouTube Video Summarizer</h2>
         <button id="useCurrentTab">Use Current Tab</button>
+        <div class="optional">
+            <input type="text" placeholder="Ask Specific Questions if any.." id="specifics" />
+        </div>
         <div class="main">
             <input type="text" placeholder="Paste YT Video URL..." id="url" />
             <button id="submitButton">Summarize</button>
         </div>
         <p id="fetching">Fetching Data from Backend</p>
         <div class="content">
-            <h3 id="videoTitle">
-                <!-- asdfasdfasd -->
-            </h3>
-            <p id="summary">
-                <!-- asdfasdfasd Lorem ipsum dolor sit amet consectetur, adipisicing
-                elit. Eaque facere repellendus voluptas aliquam sunt aperiam,
-                illo molestiae officia pariatur minus quaerat. Omnis repellat
-                ratione porro aliquam magnam! Praesentium, quod quasi magnam, a
-                inventore expedita hic placeat autem perspiciatis at sed
-                exercitationem? Harum itaque consectetur repellat. Velit
-                sapiente sequi illo explicabo quo deleniti quibusdam sed, facere
-                eum esse distinctio repellat rem nobis nisi ipsam sit asperiores
-                ullam veritatis ut! Eligendi, maiores, doloremque assumenda
-                eveniet sit, iste totam distinctio enim aut molestiae in
-                inventore provident! Nihil nostrum quaerat, ipsum ipsa, animi
-                sit expedita nulla at ullam placeat eaque, consectetur
-                assumenda. Iste, sint. -->
-            </p>
+            <h3 id="videoTitle"></h3>
+            <p id="summary"></p>
         </div>
-        <script src="script.js" type="module" defer></script>
+        <!-- <script src="script.js" type="module" defer></script> -->
+        <canvas id="myChart" height="75"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                // Change these colours to customize the chart
+                backgroundColor: ["#003F5C", "#58508D", "#BC5090", "#FF6361", "#FFA600"],
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: 'Count'
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Items'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Count'
+                    }
+                }]
+            }
+        }
+    });
+    pm.getData(function (err, value) {
+        myChart.data.datasets[0].data = value.response.data;
+        myChart.data.labels = value.response.labels;
+        myChart.update();
+    });
+</script>
     </body>
 </html>

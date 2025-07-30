@@ -28,7 +28,7 @@ Go to your google console and get your api key and save it in a .env file as **G
 ### **4. Start the backend**
 Navigate to the `backend` folder within the project directory if your terminal is not already in that folder.
 ```
-python backend.py
+./bin/build-and-run.sh
 ```
 
 ### **5. Set up the extension in browser**
