@@ -15,23 +15,17 @@ git clone https://github.com/chiragJoshi24/Summarize_Youtube_Videos
 cd Summarize_Youtube_Videos
 ```
 
-### **2. Setup the backend**
-
-```
-cd backend
-pip install -r requirements.txt
-```
-### **3. Setup a Google Gemini API Key**
+### **2. Setup a Google Gemini API Key**
 
 Go to your google console and get your api key and save it in a .env file as **GEMINI_API_KEY**
 
-### **4. Start the backend**
-Navigate to the `backend` folder within the project directory if your terminal is not already in that folder.
+### **3. Start the backend**
+Navigate to the root folder of the project directory if your terminal is not already in that folder.
 ```
 ./bin/build-and-run.sh
 ```
 
-### **5. Set up the extension in browser**
+### **4. Set up the extension in browser**
 
 Open the browser and go to 
 
