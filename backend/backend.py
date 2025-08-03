@@ -1,13 +1,11 @@
-from flask import Flask, request, jsonify
+import os
 from flask_cors import CORS
 from dotenv import load_dotenv
-import re
-import requests
-from bs4 import BeautifulSoup
-import os
 import google.generativeai as genai
+from flask import Flask, request, jsonify
 from youtube_transcript_api import YouTubeTranscriptApi
 import logging
+from .helpers import get_video_title, extract_video_id
 logger = logging.getLogger(__name__)
 
 
@@ -23,38 +21,57 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 
-def extract_video_id(url):
-    match = re.search(r'(?:v=|\/)([0-9A-za-z_-]{11})', url)
-    return match.group(1) if match else None
+@app.route('/convert-to-text/', methods=['POST'])
+def convert_image_to_text():
+    print('inside the function')
+    if 'images' not in request.files:
+        return jsonify({"message": "No images in the request"}), 400
 
+    files = request.files.getlist('images')
+    if not files:
+        return jsonify({"message": "No images uploaded"}), 400
 
-def get_video_title(url):
-    try:
-        r = requests.get(url)
-        r.raise_for_status()
-        soup = BeautifulSoup(r.text, 'html.parser')
-        title_tag = soup.find('title')
-        return title_tag.text if title_tag else "Unknown Title"
-    except Exception as e:
-        print(f"Error fetching video title: {e}")
-        return "Unknown Title"
+    results = []
+
+    for img in files:
+        image_bytes = img.read()
+        mime_type = img.mimetype
+
+        image_part = {
+            'mime_type': mime_type,
+            'data': image_bytes
+        }
+
+        response = model.generate_content([
+            image_part,
+            'Please extract all readable text from this image and give absolutely no input from your side.'
+        ])
+
+        extracted_text = response.text.strip() if response.text else 'No text found.'
+
+        results.append({
+            'filename': img.filename,
+            'text': extracted_text
+        })
+
+    return jsonify({"results": results})
 
 
 @app.route('/get-video-summary/', methods=['POST'])
 def send_response():
     try:
         if not request.is_json:
-            return jsonify({"error": "Invalid content type. JSON expected."}), 400
+            return jsonify({"message": "Invalid content type. JSON expected."}), 400
 
         data = request.get_json()
         link = data.get('link')
         if not link:
-            return jsonify({"error": "Missing link parameter"}), 400
+            return jsonify({"message": "Missing link parameter"}), 400
 
         specifics = data.get('specifics', '')
         video_id = extract_video_id(link)
         if not video_id:
-            return jsonify({"error": "Invalid or missing video ID"}), 400
+            return jsonify({"message": "Invalid or missing video ID"}), 400
 
         title = get_video_title(link)
 
@@ -75,7 +92,7 @@ def send_response():
         response = model.generate_content(prompt)
 
         if not hasattr(response, 'text') or not response.text:
-            return jsonify({"error": "Failed to generate content"}), 500
+            return jsonify({"message": "Failed to generate content"}), 500
 
         return jsonify({
             "title": title,
@@ -83,7 +100,7 @@ def send_response():
         })
 
     except Exception as e:
-        return jsonify({"error": transcript_data + str(e)}), 500
+        return jsonify({"message": transcript_data + str(e)}), 500
 
 
 if __name__ == '__main__':
