@@ -40,7 +40,7 @@ def get_video_title(url):
         return "Unknown Title"
 
 
-@app.route('/process/', methods=['POST'])
+@app.route('/get-video-summary/', methods=['POST'])
 def send_response():
     try:
         if not request.is_json:
@@ -57,14 +57,12 @@ def send_response():
             return jsonify({"error": "Invalid or missing video ID"}), 400
 
         title = get_video_title(link)
-        logger.info('-------------------->')
+
         transcript_data = ''
         try:
-            transcript_data = YouTubeTranscriptApi.get_transcript(video_id)
-            logger.info(transcript_data)
+            transcript_data = YouTubeTranscriptApi.fetch(video_id)
         except Exception as e:
             print(f"Error fetching transcript: {e}")
-        # print(transcript_data)
         transcript = " ".join([item['text'] for item in transcript_data])
 
         prompt = (
